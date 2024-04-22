@@ -91,7 +91,7 @@ export default function Post({ userId, description, images, likes, comments }) {
         >
           <Avatar
             size="lg"
-            src={`${process.env.REACT_APP_BACKEND}/public/assets/${userId.profilePicture}`}
+            src={process.env.REACT_APP_BACKEND+"/public/assets/"+(userId.profilePicture)?userId.profilePicture:"placeholder.jpg"}
             sx={{ p: 0, border: "2px solid", borderColor: "background.body" }}
           />
         </Box>

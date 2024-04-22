@@ -1,6 +1,6 @@
 import { BrowserRouter, Navigate, Routes, Route } from "react-router-dom";
 import HomePage from "pages/HomePage";
-import LoginPage from "pages/LoginPage/index";
+import LoginPage from "pages/LoginPage";
 import ProfilePage from "pages/ProfilePage";
 import { useMemo } from "react";
 import { useSelector } from "react-redux";
@@ -19,11 +19,11 @@ function App() {
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <Routes>
-            <Route path="/login" element={<LoginPage />} />
             <Route
               path="/"
               element={isAuth ? <HomePage /> : <Navigate to="/login" />}
             />
+            <Route path="/login" element={<LoginPage />} />
             <Route
               path="/profile/:userId"
               element={isAuth ? <ProfilePage /> : <Navigate to="/login" />}
