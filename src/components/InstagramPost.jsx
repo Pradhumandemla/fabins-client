@@ -6,21 +6,18 @@ import {
   Link,
   Input,
   Typography,
-  AspectRatio,
   Card,
   CardContent,
-  CardOverflow,
   IconButton,
-} from "@mui/joy";
-import MoreHoriz from "@mui/icons-material/MoreHoriz";
-import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
-import ModeCommentOutlined from "@mui/icons-material/ModeCommentOutlined";
-import SendOutlined from "@mui/icons-material/SendOutlined";
-import Face from "@mui/icons-material/Face";
-// import BookmarkBorderRoundedIcon from "@mui/icons-material/BookmarkBorderRounded";
+} from "@mui/material";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import ModeCommentOutlinedIcon from "@mui/icons-material/ModeCommentOutlined";
+import SendOutlinedIcon from "@mui/icons-material/SendOutlined";
+import FaceIcon from "@mui/icons-material/Face";
 import { useNavigate } from "react-router-dom";
 import Slider from "react-slick";
-import { useTheme } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 
 function SampleNextArrow(props) {
   const { className, style, onClick } = props;
@@ -42,9 +39,9 @@ function SampleNextArrow(props) {
 
 export default function Post({ userId, description, images, likes, comments }) {
   const navigate = useNavigate();
-  const { palette } = useTheme();
+  const theme = useTheme();
   
-  console.log(palette);
+  console.log(theme.palette);
 
   var settings = {
     dots: false,
@@ -74,7 +71,7 @@ export default function Post({ userId, description, images, likes, comments }) {
     >
       <CardContent
         orientation="horizontal"
-        sx={{ alignItems: "center", gap: 1 }}
+        sx={{ alignItems: "center", gap: 1, display: "flex", }}
       >
         <Box
           sx={{
@@ -90,6 +87,7 @@ export default function Post({ userId, description, images, likes, comments }) {
               borderRadius: "50%",
               background:
                 "linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%)",
+              
             },
           }}
         >
@@ -100,7 +98,7 @@ export default function Post({ userId, description, images, likes, comments }) {
           />
         </Box>
         <Typography
-          fontWeight="lg"
+          fontWeight="bold"
           sx={{ cursor: "pointer" }}
           onClick={() => {
             navigate(`/profile/${userId._id}`);
@@ -110,14 +108,14 @@ export default function Post({ userId, description, images, likes, comments }) {
         </Typography>
         <IconButton
           variant="plain"
-          color="neutral"
-          size="sm"
+          color="inherit"
+          size="small"
           sx={{ ml: "auto" }}
         >
-          <MoreHoriz />
+          <MoreHorizIcon />
         </IconButton>
       </CardContent>
-      <CardOverflow>
+      <CardContent>
         {/* <AspectRatio> */}
         {images && images.length > 1 ? (
           <Box
@@ -136,6 +134,7 @@ export default function Post({ userId, description, images, likes, comments }) {
                   height="auto"
                   alt="post"
                   // src={`${process.env.REACT_APP_BACKEND}/${img.path}`}
+                  src="https://mui.com/static/images/cards/yosemite.jpeg"
                 />
               ))}
             </Slider>
@@ -156,58 +155,39 @@ export default function Post({ userId, description, images, likes, comments }) {
               alt="post"
               style={{borderRadius:'.75rem'}}
               // src={`${process.env.REACT_APP_BACKEND}/${images[0].path}`}
+              src="https://mui.com/static/images/cards/yosemite.jpeg"
             />
           </Box>
         )}
         {/* </AspectRatio> */}
-      </CardOverflow>
-      <CardContent
-        orientation="horizontal"
-        sx={{ alignItems: "center", mx: -1 }}
-      >
-        <Box sx={{ width: 0, display: "flex", gap: 0.5 }}>
-          <IconButton variant="plain" color="neutral" size="sm">
-            <FavoriteBorder />
-          </IconButton>
-          <IconButton variant="plain" color="neutral" size="sm">
-            <ModeCommentOutlined />
-          </IconButton>
-          <IconButton variant="plain" color="neutral" size="sm">
-            <SendOutlined />
-          </IconButton>
-        </Box>
-        <Box
-          sx={{ display: "flex", alignItems: "center", gap: 0.5, mx: "auto" }}
-        >
-          {[...Array(5)].map((_, index) => (
-            <Box
-              key={index}
-              sx={{
-                borderRadius: "50%",
-                width: `max(${6 - index}px, 3px)`,
-                height: `max(${6 - index}px, 3px)`,
-                bgcolor: index === 0 ? "primary.solidBg" : "background.level3",
-              }}
-            />
-          ))}
-        </Box>
       </CardContent>
-      <CardContent>
+      <CardContent orientation="horizontal" sx={{ gap: 1, display: "flex" }}>
+        <IconButton variant="plain" color="inherit" size="small">
+          <FavoriteBorderIcon />
+        </IconButton>
+        <IconButton variant="plain" color="inherit" size="small">
+          <ModeCommentOutlinedIcon />
+        </IconButton>
+        <IconButton variant="plain" color="inherit" size="small">
+          <SendOutlinedIcon />
+        </IconButton>
+      </CardContent>
+      <CardContent >
         <Link
           component="button"
           underline="none"
-          fontSize="sm"
-          fontWeight="lg"
-          textColor="text.primary"
+          variant="body2"
+          fontWeight="bold"
+          sx={{ color: "text.primary" }}
         >
           8.1M Likes
         </Link>
-        <Typography fontSize="sm">
+        <Typography variant="body2">
           <Link
             component="button"
-            color="neutral"
-            fontWeight="lg"
-            textColor="text.primary"
+            color="inherit"
+            fontWeight="bold"
+            sx={{ color: "text.primary" }}
           >
             MUI
           </Link>{" "}
@@ -216,32 +196,27 @@ export default function Post({ userId, description, images, likes, comments }) {
         <Link
           component="button"
           underline="none"
-          fontSize="sm"
-          startDecorator="…"
-          sx={{ color: "text.tertiary" }}
+          variant="body2"
+          startIcon="…"
+          sx={{ color: "text.secondary" }}
         >
           more
         </Link>
-        <Link
-          component="button"
-          underline="none"
-          fontSize="10px"
-          sx={{ color: "text.tertiary", my: 0.5 }}
-        >
+        <Typography variant="caption" sx={{ mt: 0.5 }}>
           2 DAYS AGO
-        </Link>
+        </Typography>
       </CardContent>
-      <CardContent orientation="horizontal" sx={{ gap: 1 }}>
-        <IconButton size="sm" variant="plain" color="neutral" sx={{ ml: -1 }}>
-          <Face />
+      <CardContent orientation="horizontal" sx={{ gap: 1, display: "flex",}}>
+        <IconButton size="small" variant="plain" color="inherit">
+          <FaceIcon />
         </IconButton>
         <Input
-          variant="plain"
-          size="sm"
+          variant="standard"
+          size="small"
           placeholder="Add a comment…"
-          sx={{ flex: 1, px: 0, "--Input-focusedThickness": "0px" }}
+          sx={{ flex: 1, px: 0 }}
         />
-        <Link disabled underline="none" role="button">
+        <Link disabled underline="none" variant="body2" role="button">
           Post
         </Link>
       </CardContent>
