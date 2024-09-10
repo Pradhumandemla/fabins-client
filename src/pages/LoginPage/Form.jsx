@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -60,8 +60,8 @@ const initialValuesLogin = {
 };
 
 const Form = () => {
-  const [pageType, setPageType] = useState("login");
-  const [isError, setIsError] = useState(false);
+  const [pageType, setPageType] = useState("register");
+  const [errorMsg, setErrorMsg] = useState();
   const { palette } = useTheme();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -92,7 +92,7 @@ const Form = () => {
         setPageType("login");
       }
     } catch (error) {
-      setIsError(true);
+      setErrorMsg('Something Went Wrong');
     }
   };
 
@@ -106,6 +106,7 @@ const Form = () => {
           body: JSON.stringify(values),
         }
       );
+      // await loggedInResponse.json();
       const loggedIn = await loggedInResponse.json();
       onSubmitProps.resetForm();
       if (loggedIn) {
@@ -118,7 +119,7 @@ const Form = () => {
         navigate("/");
       }
     } catch (error) {
-      setIsError(true);
+      setErrorMsg('Something Went Wrong');
     }
   };
 
@@ -131,6 +132,12 @@ const Form = () => {
     { id: 2, name: "Female", value: "female" },
     { id: 3, name: "Others", value: "other" },
   ];
+  // useEffect(() => {
+  //   if (errorMsg) {
+  //     alert(errorMsg);
+  //     setErrorMsg('');
+  //   }
+  // });
 
   return (
     <Formik
@@ -316,11 +323,11 @@ const Form = () => {
           </Box>
 
           {/* BUTTONS */}
-          {isError && (
+          {errorMsg && (
             <Box sx={{ marginY: "20px" }}>
               <Alert severity="error">
                 <AlertTitle>Error</AlertTitle>
-                Something Went Wrong 
+                {errorMsg} 
                 {/* — <strong>check it out!</strong> */}
               </Alert>
             </Box>

@@ -133,7 +133,7 @@ export default function Post({ userId, description, images, likes, comments }) {
                   key={index}
                   height="auto"
                   alt="post"
-                  // src={`${process.env.REACT_APP_BACKEND}/${img.path}`}
+                  // src={`${process.env.REACT_APP_BACKEND}/download/${img}`}
                   src="https://mui.com/static/images/cards/yosemite.jpeg"
                 />
               ))}
