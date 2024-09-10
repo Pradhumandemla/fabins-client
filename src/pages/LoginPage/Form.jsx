@@ -30,11 +30,11 @@ const registerSchema = yup.object().shape({
   lastName: yup.string().required("required"),
   email: yup.string().email("invalid email").required("required"),
   password: yup.string().required("required"),
-  location: yup.string().required("required"),
-  occupation: yup.string().required("required"),
-  picture: yup.string().required("required"),
+  // location: yup.string().required("required"),
+  // occupation: yup.string().required("required"),
+  // picture: yup.string().required("required"),
   gender: yup.string().required("required"),
-  dateOfBirth: yup.string().required("required"),
+  // dateOfBirth: yup.string().required("required"),
 });
 
 const loginSchema = yup.object().shape({
@@ -47,11 +47,11 @@ const initialValuesRegister = {
   lastName: "",
   email: "",
   password: "",
-  location: "",
-  occupation: "",
-  picture: "",
+  // location: "",
+  // occupation: "",
+  // picture: "",
   gender: "",
-  dateOfBirth: "",
+  // dateOfBirth: "",
 };
 
 const initialValuesLogin = {
@@ -76,7 +76,7 @@ const Form = () => {
       for (let value in values) {
         formData.append(value, values[value]);
       }
-      formData.append("profilePicture", values.picture.name);
+      // formData.append("profilePicture", values.picture.name);
 
       const savedUserResponse = await fetch(
         process.env.REACT_APP_BACKEND + "/auth/register",
@@ -87,12 +87,12 @@ const Form = () => {
       );
       const savedUser = await savedUserResponse.json();
       onSubmitProps.resetForm();
-
-      if (savedUser) {
-        setPageType("login");
+      if (savedUser.error){
+        return setErrorMsg("Something Went Wrong");
       }
+      setPageType("login");
     } catch (error) {
-      setErrorMsg('Something Went Wrong');
+      setErrorMsg("Something Went Wrong");
     }
   };
 
@@ -119,7 +119,7 @@ const Form = () => {
         navigate("/");
       }
     } catch (error) {
-      setErrorMsg('Something Went Wrong');
+      setErrorMsg("Something Went Wrong");
     }
   };
 
@@ -132,12 +132,12 @@ const Form = () => {
     { id: 2, name: "Female", value: "female" },
     { id: 3, name: "Others", value: "other" },
   ];
-  // useEffect(() => {
-  //   if (errorMsg) {
-  //     alert(errorMsg);
-  //     setErrorMsg('');
-  //   }
-  // });
+  useEffect(() => {
+    if (errorMsg) {
+      alert(errorMsg);
+      setErrorMsg('');
+    }
+  });
 
   return (
     <Formik
@@ -188,7 +188,7 @@ const Form = () => {
                   helperText={touched.lastName && errors.lastName}
                   sx={{ gridColumn: "span 2" }}
                 />
-                <TextField
+                {/* <TextField
                   label="Location"
                   onBlur={handleBlur}
                   onChange={handleChange}
@@ -242,7 +242,7 @@ const Form = () => {
                       </Box>
                     )}
                   </Dropzone>
-                </Box>
+                </Box> */}
 
                 <Field name="gender">
                   {({ field }) => (
@@ -276,7 +276,7 @@ const Form = () => {
                     </FormControl>
                   )}
                 </Field>
-                <Field name="dateOfBirth">
+                {/* <Field name="dateOfBirth">
                   {({ field, form }) => {
                     return (
                       <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -295,7 +295,7 @@ const Form = () => {
                       </LocalizationProvider>
                     );
                   }}
-                </Field>
+                </Field> */}
               </>
             )}
 
@@ -327,7 +327,7 @@ const Form = () => {
             <Box sx={{ marginY: "20px" }}>
               <Alert severity="error">
                 <AlertTitle>Error</AlertTitle>
-                {errorMsg} 
+                {errorMsg}
                 {/* — <strong>check it out!</strong> */}
               </Alert>
             </Box>
